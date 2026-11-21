@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBD maa aydol🎉</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* BACKGROUND LAYER (FADE) */
+#bgLayer {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+/* vignette */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.4));
+  pointer-events: none;
+}
+
+/* JUDUL */
+h1 {
+  color: #fff;
+  font-size: 2rem;
+  text-shadow: 0 0 15px rgba(255,255,255,0.7);
+  animation: float 3s ease-in-out infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+  @keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+  }
+    @keyframes pop{
+  from{
+    opacity:0;
+    transform:scale(.8);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+    }
+      @keyframes bounce{
+  0%,100%{
+    transform:translateY(0) scale(1);
+  }
+
+  25%{
+    transform:translateY(-18px) scale(1.05,.95);
+  }
+
+  50%{
+    transform:translateY(-28px) scale(.96,1.04);
+  }
+
+  75%{
+    transform:translateY(-10px) scale(1.02,.98);
+  }
+}
+
+/* FOTO */
+.main-img {
+  position: fixed;
+
+  left: 85%;
+  top: 0%;
+  width: 70px;
+  border-radius: 44px;
+  margin-top: 20px;
+  box-shadow: 0 0 25px rgba(255,255,255,0.5);
+  opacity: 0.5;
+}
+
+/* FALLING */
+.text, .love {
+  position: fixed;
+  top: -50px;
+  font-weight: 900;
+  user-select: none;
+  animation: fall linear forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.text {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.7);
+}
+
+.love {
+  color: #ff3366;
+  text-shadow: 0 0 15px #fff, 0 0 25px #ff6b81;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+  
+}
+
+/* CONTROL */
+.controls{
+  position:fixed;
+  left:50%;
+  top:70%;
+  transform:translate(-50%,-50%);
+
+  padding:12px;
+
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(3px);
+
+  border-radius:20px;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:10px;
+
+  z-index:9999;
+}
+
+.music-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.bg-row{
+  
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+
+  max-width:500px;
+}
+
+.album-cover{
+  width:64px;
+  height:64px;
+
+  animation: spin 13s linear infinite;
+  animation-play-state: paused;
+  
+  border-radius:50px;
+  object-fit:cover;
+}
+  .album-cover.playing {
+  animation-play-state: running;
+}
+  
+.music-control {
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.12);
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  backdrop-filter: blur(20px);
+
+  color: white;
+  font-size: 12px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: all .25s ease;
+
+  box-shadow:
+    0 4px 20px rgba(0,0,0,.25);
+}
+
+.music-control:hover{
+  transform: scale(1.08);
+  color: white;
+}
+
+.music-control.active{
+  background: rgba(255,255,255,.22);
+}
+
+#volumeSlider{
+  width:110px;
+  -webkit-appearance:none;
+  appearance:none;
+   accent-color: #ff4d6d;
+
+  height:6px;
+  border-radius:10px;
+
+  background:rgba(255,255,255,.3);
+}
+
+/* Eskrim */
+#volumeSlider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+
+  width:30px;
+  height:30px;
+  accent-color: #ff4d6d;
+
+  background:url("eskrim.png") center/contain no-repeat;
+
+  cursor:pointer;
+  border:none;
+}
+
+.bg-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.bg-btn {
+  width: 26px;
+  height: 26px;
+
+  border-radius: 50%;
+
+  background-size: cover;
+  background-position: center;
+
+  border: 2px solid rgba(255,255,255,.4);
+
+  cursor: pointer;
+
+  transition: all .25s ease;
+
+  box-shadow:
+    0 2px 10px rgba(0,0,0,.3);
+}
+
+.bg-btn:hover{
+  transform: scale(1.25);
+  border-color: pink;
+}
+
+.bg-btn.active{
+  border: 2px solid #ff4d6d;
+  transform: scale(1.15);
+  box-shadow: 0 0 15px #ff4d6d;
+}
+  #friendshipCounter{
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  text-align: center;
+  line-height: 1.3;
+
+  padding: 8px 12px;
+
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(15px);
+
+  border-radius: 15px;
+
+  color: white; 
+  font-size: 13px;
+  font-weight: 500;
+
+  z-index: 9999;
+}
+  .letter-btn{
+  padding:8px 14px;
+
+  border:none;
+  border-radius:12px;
+
+  background:rgba(255,255,255,.15);
+
+  color:white;
+
+  cursor:pointer;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(0,0,0,.5);
+  backdrop-filter:blur(8px);
+
+  z-index:10000;
+}
+
+.modal.show{
+  display:flex;
+}
+
+
+.letter-box{
+  overflow-y:auto;
+  max-height:80vh;
+  animation: pop .3s ease;
+  width:85%;
+  max-width:350px;
+
+  max-height:80vh;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+
+  padding:20px;
+
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(20px);
+
+  border-radius:20px;
+  color:white;
+
+  position:relative;
+}
+
+
+#closeLetter{
+  position:sticky;
+  top:0;
+  float:right;
+  z-index:10;
+
+
+  border:none;
+  background:none;
+
+  color:white;
+
+  cursor:pointer;
+}
+  .gallery-box{
+  width:90%;
+  max-width:320px;
+
+  padding:12px;
+
+  background:white;
+
+  border-radius:20px;
+
+  text-align:center;
+
+  position:relative;
+
+  animation:pop .3s ease;
+}
+
+#galleryImage{
+  width:100%;
+  height:350px;
+  object-fit:cover;
+  border-radius:12px;
+
+  box-shadow:0 8px 25px rgba(0,0,0,.25);
+
+  transition:
+    transform .35s ease,
+    opacity .35s ease;
+}
+
+#galleryImage.flip{
+  opacity:0;
+  transform:perspective(800px) rotateY(90deg) scale(.92);
+  filter:brightness(.8);
+}
+
+.gallery-caption{
+  margin-top:10px;
+
+  color:#666;
+
+  font-size:14px;
+  font-weight:600;
+}
+
+.gallery-controls button{
+  width:35px;
+  height:35px;
+
+  border:none;
+  border-radius:50%;
+
+  background:rgba(255,255,255,.15);
+
+  color:yellow;
+
+  cursor:pointer;
+}
+
+#closeGallery{
+  position:absolute;
+
+  top:10px;
+  right:10px;
+
+  background:none;
+  border:none;
+
+  color:white;
+
+  cursor:pointer;
+}
+  .gallery-box{
+  width:90%;
+  max-width:320px;
+
+  padding:12px;
+
+  background:white;
+
+  border-radius:20px;
+
+  text-align:center;
+
+  position:relative;
+
+  animation: pop .3s ease;
+  box-shadow:0 10px 40px rgba(0,0,0,.3);
+}
+  .gallery-caption{
+  margin-top:10px;
+  color:#666;
+  font-size:14px;
+  font-weight:600;
+
+  transition:opacity .3s ease;
+}
+
+.gallery-caption.hide{
+  opacity:0;
+}
+  #loadingScreen{
+  position:fixed;
+  inset:0;
+
+  background:#111;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  z-index:999999;
+
+  transition:opacity .8s ease;
+}
+
+.loading-avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+
+  animation: spin 5s linear infinite;
+}
+.loading-bar{
+  width:220px;
+  height:8px;
+
+  background:#333;
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  margin:20px 0;
+}
+
+#loadingProgress{
+  width:0%;
+  height:100%;
+
+  background:linear-gradient(90deg,#ff4d6d,#ff9a9e);
+
+  transition:width .2s linear;
+}
+
+#loadingText{
+  color:white;
+  opacity:.8;
+  font-size:14px;
+}
+.loading-bounce{
+  margin-bottom:20px;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+</style>
+</head>
+
+<body>
+  <div id="loadingScreen">
+  <div class="loading-bounce">
+  <img src="tira0.png" class="loading-avatar">
+</div>
+  <h2>Loading surprise sek...</h2>
+
+  <div class="loading-bar">
+    <div id="loadingProgress"></div>
+  </div>
+
+  <p id="loadingText">Menyiapkan sesuatu buat Tira...</p>
+</div>
+<div id="letterModal" class="modal">
+
+  <div class="letter-box">
+
+    <button id="closeLetter">✕</button>
+    
+
+    <h2>💌 HAHAHA tugas literasi boz</h2>
+
+    <p>
+      Hai Tiraa,
+HAPPY BIRTHDAYYYY!! 🎉🎂
+
+WOOOO, akhirnya nambah umur juga HAHAHAHA. Selamat ulang tahun yaaa, YIRAAA. Udah nambah umur, yakali masih suka kejedot WKWKWK. Semoga di umur yang baru ini makin banyak hal baik yang dateng ke Tira. Semoga semua yang lagi Tira usahain bisa tercapai, yang lagi Tira tunggu-tunggu cepet dateng, dan segala hal yang bikin pusing bisa berkurang satu per satu. AAMIIN PALING SERIUSSS!!
+
+Aseli deh Reja bingung mau nulis apa di sini, padahal udah niat bikin website beginian. Masa iya udah capek-capek bikin terus isinya cuma "hbd ya, panjang umur" WKWKWK. Jadi yaudah, sekalian Reja manfaatin buat nulis agak panjang dikit.
+
+Btw, makasih yaaa udah jadi temen yang seru selama ini, Kueputuuu. Walaupun kadang tingkah Tira suka ada-ada aja, kadang bikin bingung, kadang juga bikin ketawa sendiri HAHAHA. Mulai dari tingkah random, kelakuan kakak-kakak OSIS. Tapi justru hal-hal kecil kayak gitu yang bikin banyak momen jadi berkesan.
+
+Lucu juga kalau dipikir-pikir, dari yang awalnya masih asing sampai akhirnya punya banyak cerita. Tau-tau udah selama ini aja, waktu emang suka nggak ngotak ya WKWKWK. Rasanya baru kemarin kenal, eh sekarang udah bisa nostalgia segala.
+
+Pokoknya, semoga Tira selalu sehat, bahagia, dan dikelilingi orang-orang yang tulus sama Tira. Jangan kebanyakan overthinking, jangan terlalu keras sama diri sendiri, dan kalau lagi capek jangan lupa istirahat. Nikmatin juga hal-hal kecil yang bikin Tira seneng, karena nggak harus selalu ada sesuatu yang besar buat bikin hari jadi menyenangkan.
+
+OH IYA, semoga di umur 13 ini akhirnya jatuh cinta sama MATCHA juga. Masa matcha aja belum bisa meluluhkan hati Tira WKWKWKWK. Semoga makin dewasa, tapi jangan sampai kehilangan sisi random dan absurd Tira yang sekarang. Tetep jadi Kueputu yang Reja kenal, tetep jadi artis, dan jangan lupa sama rakyat jelata ya mentang2 udah jadi wapres HAHAHAHA.
+
+Sekali lagi, HAPPY BIRTHDAYYY!! 🥳🎉
+
+Semoga tahun ini jadi salah satu tahun yang paling menyenangkan buat Tira. Semoga doa-doa yang belum sempat terkabul bisa menemukan waktunya, dan semoga nanti kalau Tira nengok ke belakang, Tira bisa bilang kalau ternyata banyak hal baik yang udah berhasil Tira lewatin.
+
+Makasih udah baca sampai habis, padahal Reja juga nggak yakin tulisan Reja sebagus itu buat dibaca WKWKWK.
+
+WISH U ALL THE BEST ANDENJOY YOUR DAYYY, KUEPUTUU!! 🎂✨💗
+
+
+- Reja
+    </p>
+
+  </div>
+
+</div>
+<div id="galleryModal" class="modal">
+
+  <div class="gallery-box">
+
+  <button id="closeGallery">✕</button>
+
+  <img id="galleryImage" src="tira1.jpg">
+
+  <p class="gallery-caption">
+    ✨ Apaya ini ✨
+  </p>
+
+  <div class="gallery-controls">
+    <button id="prevBtn">◀</button>
+    <span id="photoCount">1 / 7</span>
+    <button id="nextBtn">▶</button>
+  </div>
+
+</div>
+
+</div>
+
+<div id="bgLayer"></div>
+
+<h1>🎉 HBD maa aydoll 🎉</h1>
+
+<img src="tira0.png" class="main-img">
+
+<audio id="bgMusic" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
+<div class="controls">
+
+  <div class="music-row">
+    <img src="album.jpg" class="album-cover">
+
+   <button id="musicToggle" class="music-control">▶</button>
+
+<input type="range"
+       id="volumeSlider"
+       min="0"
+       max="1"
+       step="0.01"
+       value="0.5">
+  </div>
+
+  <div class="bg-row" id="bgButtons"></div>
+  <button id="openLetter" class="letter-btn">
+  ✉️ Buka aja wei wahaha
+</button>
+  <button id="openGallery" class="letter-btn">
+  📸 Gallery
+</button>
+    <!-- tombol background -->
+  </div>
+<div id="friendshipCounter">
+  🔥 Friendship Streak
+
+238 Days
+</div>
+
+<script>
+/* FALLING */
+const messages = ["HBD","rating buatankuu murni ini","Tira ak rating 11/10","slide volume ituu","klik tombol play lagu","klik tombol dibawah itu","hmmm","best idol gwejh","say owaw to reja","dibaca plss","maav kalo pusing bacanya","Lololoooo","67","SIXSEVEN","GKWT","Aoa lagi ysaa","Janhan lupain fens ini pls","Tiracool","langsung tidur ya gnight","Congrats","Tirakemrenn","Tiracantip","Tirabaiqhati","Tiraresmiremaja13","Tiraluxue","Tiranakbaik","Tiraimup","Dikkk","238 days kita kenal","🎉","🎂","Wish You All The Best","Semangat!"];
+const hearts = ["❤️","💖","21nov","💕"];
+
+function createFallingElement(text, isLove=false) {
+  const el = document.createElement('div');
+  el.className = isLove ? 'love' : 'text';
+  el.textContent = text;
+
+  el.style.left = Math.random()*100 + "vw";
+  el.style.fontSize = (0.6 + Math.random()*1.2) + "rem";
+  el.style.animationDuration = (4 + Math.random()*3) + "s";
+
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),7000);
+}
+
+setInterval(()=>{
+  createFallingElement(messages[Math.floor(Math.random()*messages.length)]);
+  createFallingElement(hearts[Math.floor(Math.random()*hearts.length)], true);
+},300);
+
+/* MUSIC */
+const music = document.getElementById("bgMusic");
+const toggle = document.getElementById("musicToggle");
+const volumeSlider = document.getElementById("volumeSlider");
+const album = document.querySelector(".album-cover");
+  const openLetter = document.getElementById("openLetter");
+const closeLetter = document.getElementById("closeLetter");
+const modal = document.getElementById("letterModal");
+
+openLetter.onclick = ()=>{
+  modal.classList.add("show");
+};
+
+closeLetter.onclick = ()=>{
+  modal.classList.remove("show");
+};
+const firstMeet = new Date("2026-03-27T08:25:00");
+  
+function updateCounter(){
+  const now = new Date();
+  const diff = now - firstMeet;
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("friendshipCounter").innerHTML =
+`
+🔥Reja ngefans ke Tira sejak<br>
+${days} Days<br>
+${hours} Hours<br>
+${minutes} Minute<br>
+${seconds} Seconds<br>
+😝😎😆vroo wkwkwkkwkwk
+
+`;
+  
+}
+
+setInterval(updateCounter, 1000);
+updateCounter();
+let isPlaying = false;
+
+toggle.onclick = ()=>{
+  if(!isPlaying){
+    music.play();
+    toggle.textContent = "❚❚";
+    toggle.classList.add("active");
+
+    album.classList.add("playing");
+
+  } else {
+    music.pause();
+    toggle.textContent = "▶";
+    toggle.classList.remove("active");
+
+    album.classList.remove("playing");
+  }
+
+  isPlaying = !isPlaying;
+};
+
+function updateVolumeSlider(){
+  const value = volumeSlider.value * 100;
+
+  volumeSlider.style.background =
+    `linear-gradient(
+      to right,
+      #ff4d6d ${value}%,
+      rgba(255,255,255,.3) ${value}%
+    )`;
+}
+
+volumeSlider.oninput = ()=>{
+  music.volume = volumeSlider.value;
+  updateVolumeSlider();
+};
+
+updateVolumeSlider();
+
+/* BACKGROUND FADE */
+const bgLayer = document.getElementById("bgLayer");
+
+const bgList = [
+  "tira1.jpg",
+  "tira2.jpg",
+  "tira3.jpg",
+  "tira4.jpg",
+  "tira5.jpg",
+  "tira6.jpg",
+  "tira7.jpg",
+  "tira8.jpg",
+  "tira9.jpg",
+  "tira10.jpg",
+  "tira11.jpg",
+  "tira12.jpg",
+  
+];
+
+const bgContainer = document.getElementById("bgButtons");
+
+bgList.forEach((img)=>{
+  const btn = document.createElement("div");
+  btn.className = "bg-btn";
+  btn.style.backgroundImage = `url(${img})`;
+
+  btn.onclick = ()=>{
+    bgLayer.style.opacity = 0;
+
+    setTimeout(()=>{
+      bgLayer.style.background = `
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url(${img}) center/cover no-repeat
+      `;
+      bgLayer.style.opacity = 1;
+    }, 300);
+  };
+
+  bgContainer.appendChild(btn);
+});
+
+/* background awal */
+bgLayer.style.background = `
+  linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+  url(tira1.jpg) center/cover no-repeat
+`;
+  const galleryImages = [
+  "tira13.jpg",
+  "tira14.jpg",
+  "tira15.jpg",
+  "tira16.jpg",
+  "tira5.jpg",
+  "tira6.jpg",
+  "tira7.jpg",
+  "tira17.jpg",
+  "tira19.jpg",
+  "tira20.jpg",
+  "tira21.jpg",
+  "tira18.jpg",
+  "tira22.jpg"
+];
+
+let currentPhoto = 0;
+
+const galleryModal = document.getElementById("galleryModal");
+const galleryImage = document.getElementById("galleryImage");
+const galleryCaptions = [
+  "✨ looks like idol bqnget ini woi",
+  "📷 Top singko jumpscare moment",
+  "😎 Yeyy lulus .",
+  "😂 Ini yang waktu kejwdot bukansih wkwkw",
+  "📸 WleeeeEEEEEE",
+  "🌸 Ini wwktu potongrambut bukan?.",
+  "🎂 Happy Birthday once again, Tiraa!",
+  "🍜 eeh ada mbg 'kita'",
+  "estehh manis anget no sugars",
+  "🤤dimas",
+  "inikan kamu ra, kueputulewat~",
+  "🍵 eum permisi aku ikutan.",
+  "hormat wapres grak!"
+];
+const photoCount = document.getElementById("photoCount");
+const galleryCaption = document.querySelector(".gallery-caption");
+
+document.getElementById("openGallery").onclick = ()=>{
+  galleryModal.classList.add("show");
+};
+
+document.getElementById("closeGallery").onclick = ()=>{
+  galleryModal.classList.remove("show");
+};
+
+function updateGallery(){
+
+  galleryImage.classList.add("flip");
+
+  setTimeout(()=>{
+
+    galleryImage.src = galleryImages[currentPhoto];
+    galleryCaption.textContent = galleryCaptions[currentPhoto];
+
+    photoCount.textContent =
+      `${currentPhoto + 1} / ${galleryImages.length}`;
+
+    galleryImage.classList.remove("flip");
+    galleryCaption.classList.remove("hide")
+
+  },175);
+}
+
+updateGallery();
+document.getElementById("nextBtn").onclick = ()=>{
+  currentPhoto++;
+
+  if(currentPhoto >= galleryImages.length){
+    currentPhoto = 0;
+  }
+
+  updateGallery();
+};
+
+document.getElementById("prevBtn").onclick = ()=>{
+  currentPhoto--;
+  if(currentPhoto < 0){
+    currentPhoto = galleryImages.length - 1;
+  }
+
+  updateGallery();
+};
+
+updateGallery();
+  
+const loading = document.getElementById("loadingScreen");
+const progress = document.getElementById("loadingProgress");
+const loadingText = document.getElementById("loadingText");
+
+const texts = [
+  "surprise sek...",
+  "Ngumpulin foto doloo...",
+  "Menghitung friendship...",
+  "Nyiaoin musik dulu...",
+  "syudahh..."
+];
+
+let percent = 0;
+
+const load = setInterval(()=>{
+
+  percent++;
+
+  progress.style.width = percent + "%";
+
+  if(percent % 20 == 0){
+    loadingText.textContent =
+      texts[Math.floor(percent/20)-1];
+  }
+
+  if(percent >= 100){
+    clearInterval(load);
+
+    loading.style.opacity="0";
+
+    setTimeout(()=>{
+      loading.remove();
+    },800);
+  }
+
+},130);
+</script>
+
+</body>
+</html>
